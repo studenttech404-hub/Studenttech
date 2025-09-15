@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Student Tech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .header {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .header img {
+      height: 50px;
+    }
+
+    .main-container {
+      padding: 2rem;
+      background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+      min-height: calc(100vh - 80px);
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Logo Header -->
+<div class="header">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Student Tech Logo">
+</div>
+
+<!-- Main Dashboard -->
+<div class="main-container">
+  <div class="card">
+    <h2>Welcome to Student Tech Dashboard</h2>
+    <p>This is your central hub. Manage your profile, explore projects, and track progress here.</p>
+    <!-- Add your dashboard widgets or content here -->
+  </div>
+</div>
+
+</body>
+</html>

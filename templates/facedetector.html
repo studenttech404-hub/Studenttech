@@ -1,0 +1,138 @@
+{% include "header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="Real vs Fake Face Detector - AI Web App">
+  <meta name="description" content="A machine learning-powered web app that detects whether a face image is real or fake using TensorFlow and Node.js. Built with Express, Python, and Keras.">
+  <meta name="keywords" content="AI, Deep Learning, Face Detection, Fake Face Detector, GAN, TensorFlow, Node.js, Express, Keras, Machine Learning, Web App">
+  <title>Real vs Fake Face Detector</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<main class="container my-5">
+  <article class="p-4 shadow-lg rounded bg-white">
+    <h2 class="fw-bold mb-3">Real vs Fake Face Detector 🔍🤖</h2>
+    <p>
+      A machine learning-powered web app that detects whether a face image is Real or Fake (AI-generated).
+      Built using a deep learning model served via a smooth Node.js + Express backend and styled with a simple frontend interface.
+      This project is open to improvements and community contributions! 💫
+    </p>
+
+    <h3 class="mt-4">🧠 How It Works</h3>
+    <ul>
+      <li>User uploads a face image through the browser.</li>
+      <li>The image is sent to the backend via AJAX (without page reload).</li>
+      <li>Node.js server passes the image buffer to a Python script.</li>
+      <li>A TensorFlow/Keras model processes the image and predicts Real or Fake.</li>
+      <li>The prediction is returned as JSON and displayed live on the page.</li>
+    </ul>
+
+    <h3 class="mt-4">🗃️ Dataset Used</h3>
+    <p>
+      This model was trained using the <strong>140K Real and Fake Faces</strong> dataset from Kaggle.
+    </p>
+    <p>
+      📦 Dataset:  
+      <a href="https://www.kaggle.com/datasets/xhlulu/140k-real-and-fake-faces" target="_blank">
+        https://www.kaggle.com/datasets/xhlulu/140k-real-and-fake-faces
+      </a>
+    </p>
+    <p>
+      ⚠️ Note: This model performs best on images similar to the dataset (clean, centered, portrait-style images).  
+      Unseen fake styles or out-of-distribution faces may result in inaccurate predictions.
+    </p>
+
+    <h3 class="mt-4">📦 Tech Stack</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Frontend</td><td>HTML, CSS, JavaScript (jQuery)</td></tr>
+        <tr><td>Backend</td><td>Node.js, Express</td></tr>
+        <tr><td>Machine Learning</td><td>TensorFlow, Keras, Python</td></tr>
+        <tr><td>Image Upload</td><td>Multer (memory storage)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="mt-4">🚀 Getting Started</h3>
+    <ol>
+      <li><strong>Clone the Repository</strong>
+        <pre><code>git clone https://github.com/yourusername/RealVsFakeFaceDetector.git
+cd RealVsFakeFaceDetector</code></pre>
+      </li>
+      <li><strong>Install Node.js Dependencies</strong>
+        <pre><code>npm install</code></pre>
+      </li>
+      <li><strong>Set Up Python Environment</strong><br>
+        Make sure Python is installed (>= 3.10), and install required packages:
+        <pre><code>pip install tensorflow numpy opencv-python</code></pre>
+      </li>
+      <li><strong>Start the Server</strong>
+        <pre><code>node server.js</code></pre>
+      </li>
+      <li><strong>Visit the App in Your Browser</strong>
+        <pre><code>http://localhost:4000</code></pre>
+      </li>
+      <li>
+        <strong>Repository link</strong><br>
+        <a href="https://github.com/emaaanbutt/ReaVsFakeFaceDetector">https://github.com/emaaanbutt/ReaVsFakeFaceDetector</a>
+      </li>
+    </ol>
+
+    <h3 class="mt-4">🎯 Prediction UI</h3>
+    <p>
+      Users can upload an image and get results displayed live under the form — without any page reloads!
+    </p>
+    <p><strong>Example output:</strong></p>
+    <pre class="bg-light p-3 rounded">Prediction: Real (99.34%)</pre>
+    <pre class="bg-light p-3 rounded">Prediction: Fake (78.23%)</pre>
+
+
+    <h3 class="mt-4">⚠️ Limitations</h3>
+    <ul>
+      <li>🚫 May misclassify GAN types not seen during training.</li>
+      <li>🧠 Trained on 140K images, mostly focused on a specific GAN type.</li>
+      <li>🖼️ Performance drops on heavily edited, noisy, or side-view face images.</li>
+    </ul>
+
+    <h3 class="mt-4">✨ Future Improvements</h3>
+    <ul>
+      <li>Add image preprocessing for better generalization.</li>
+      <li>Enhance model with more GAN variety (StyleGAN2, etc.).</li>
+      <li>Improve frontend with drag-and-drop uploads.</li>
+    </ul>
+
+    <h3 class="mt-4">❤️ Acknowledgements</h3>
+    <ul>
+      <li>Dataset: 140K Real and Fake Faces on Kaggle</li>
+      <li>TensorFlow / Keras</li>
+      <li>Node.js & Express</li>
+      <li>jQuery for seamless AJAX form handling</li>
+    </ul>
+
+    <h3 class="mt-4">📜 License</h3>
+    <p>
+      This project is licensed under the <strong>MIT License</strong> — free for personal or academic use.  
+      Please give credit if you use it or build upon it 💖
+    </p>
+
+    <h3 class="mt-4" >Preview</h3>
+    <img src="" alt="">
+  </article>
+</main>
+
+</body>
+</html>
+{% include "footer.html" %}

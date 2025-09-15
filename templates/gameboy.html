@@ -1,0 +1,119 @@
+
+  {% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <meta name="title" content="🎮 Classic GameBoy Project – Retro Gaming in Modern C++">
+  <meta name="description" content="A retro-inspired GameBoy project built in modern C++ using SFML and OOP principles. Includes Snake, Wordle, and Hangman in one modular gaming universe.">
+  <meta name="keywords" content="GameBoy Project, C++ OOP, SFML, Snake, Wordle, Hangman, Retro Game, FAST University, Object-Oriented Programming">
+  <meta name="author" content="Abdul Rauf">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="🎮 Classic GameBoy Project – Retro Gaming in Modern C++">
+  <meta property="og:description" content="Play Snake, Wordle, and Hangman inside a custom GameBoy-style console. Built with C++ OOP + SFML graphics and audio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/rauf17/GameBoy_Project/main/preview.png">
+
+  <title>🎮 Classic GameBoy Project</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body  style="background: linear-gradient(to right, #9C27B0, #3F51B5);">
+{% include "header.html" %}
+<main class="container my-5" style="padding-top: 120px;">
+  <article class="p-4 shadow-lg rounded bg-white">
+
+    <h1 class="fw-bold mb-3 text-center">🎮 Classic GameBoy Project</h1>
+    <p class="lead text-center">
+      A retro-inspired <strong>gaming platform</strong> crafted in modern C++ with <strong>SFML</strong> and powered by solid <strong>OOP principles</strong>.  
+      Featuring three nostalgic classics: <strong>Snake Xenia, Wordle, and Hangman</strong>.
+    </p>
+
+    <hr>
+
+    <h3 class="mt-4">🎯 Features</h3>
+    <ul>
+      <li>🕹️ Multiple Games – Snake, Wordle, and Hangman</li>
+      <li>👤 Player Profiles – Manage accounts and track scores</li>
+      <li>📱 GameBoy-like Console Menu – Navigate through games with retro UI</li>
+      <li>🎨 SFML Graphics – 2D rendering and animations</li>
+      <li>🎼 Audio Integration – Retro sound effects for immersion</li>
+      <li>🎵 Game Over Screen – Dramatic sound effects</li>
+      <li>🧠 Modular OOP Design – Clean, extensible, and maintainable</li>
+    </ul>
+
+    <h3 class="mt-4">🛠️ Installation</h3>
+    <pre class="bg-dark text-white p-3 rounded"><code>git clone https://github.com/rauf17/GameBoy_Project.git
+cd GameBoy_Project
+# Find and run the executable file:
+i230591_OOP_GameBoy_Project.exe
+</code></pre>
+    <p>
+      ▶️ Navigate to the <code>GameBoy_Project</code> folder and run <strong>i230591_OOP_GameBoy_Project.exe</strong> to play.
+    </p>
+
+    <h3 class="mt-4">🧰 Games Included</h3>
+    <ul>
+      <li>🐍 <strong>Snake Xenia</strong> – Grow after eating mushrooms, avoid collisions, collect coins for bonus.</li>
+      <li>🧩 <strong>Wordle Clone</strong> – Guess the 5-letter word with limited tries and feedback tiles.</li>
+      <li>💀 <strong>Hangman</strong> – Guess the word before the full man is drawn, hints included.</li>
+    </ul>
+
+    <h3 class="mt-4">🧱 Object-Oriented Concepts Used</h3>
+    <ul>
+      <li>🔁 <strong>Inheritance</strong> – All games inherit from an abstract <code>Game</code> class with a unified <code>Run()</code> method.</li>
+      <li>🔄 <strong>Polymorphism</strong> – GameBoy runs any game via a <code>Game*</code> pointer.</li>
+      <li>🔗 <strong>Composition</strong> – GameBoy composed of MainMenu, Player, Leaderboard, Game.</li>
+      <li>🧺 <strong>Aggregation</strong> – Multiple games share leaderboard & player access without ownership.</li>
+      <li>🧊 <strong>Abstraction</strong> – Abstract <code>Game</code> defines clear interfaces for all games.</li>
+    </ul>
+
+    <h3 class="mt-4">🕹️ How to Play</h3>
+    <ul>
+      <li>🐍 <strong>Snake Xenia</strong>: Arrow keys/WASD to move, eat mushrooms, avoid walls, coins give bonus.</li>
+      <li>🧩 <strong>Wordle</strong>: Guess 5-letter word, feedback via tiles, input via keyboard or mouse.</li>
+      <li>💀 <strong>Hangman</strong>: Guess letters, wrong guesses draw the man, limited lives, hints available.</li>
+    </ul>
+
+    <h3 class="mt-4">⚙️ Development</h3>
+    <ul>
+      <li>💬 Language: <strong>C++</strong></li>
+      <li>🧰 Library: <strong>SFML</strong> (Graphics, Audio, Window, Events)</li>
+      <li>🧱 Paradigm: <strong>Pure Object-Oriented Programming</strong></li>
+      <li>💻 Tools: <strong>Visual Studio, Git, SFML</strong></li>
+    </ul>
+
+    <h3 class="mt-4">👥 Credits</h3>
+    <ul>
+      <li>🎮 Game Concept: Inspired by retro GameBoy, reimagined in modern C++</li>
+      <li>👨‍💻 Developer: Abdul Rauf</li>
+      <li>🎼 Music & Art: Custom and royalty-free resources</li>
+    </ul>
+
+    <h3 class="mt-4">📦 Repository</h3>
+    <p>
+      🔗 <a href="https://github.com/rauf17/GameBoy_Project" target="_blank">
+        View on GitHub
+      </a>
+    </p>
+
+    <p class="text-center mt-5">
+      <span class="fw-bold">Academic Project</span> — Developed at FAST University.  
+      Don’t forget to ⭐ the repo if you like it 💖
+    </p>
+  </article>
+</main>
+
+</body>
+</html>
+
+  {% include 'footer.html' %}

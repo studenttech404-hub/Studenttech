@@ -1,0 +1,161 @@
+{% include 'header.html' %}
+
+<!-- Chat Widget -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+<script defer src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+<script>
+  function showHumanOptions() {
+    document.querySelector('.human-options').style.display = 'block';
+    document.querySelector('.ai-chat').style.display = 'none';
+  }
+  function showAiChat() {
+    document.querySelector('.ai-chat').style.display = 'block';
+    document.querySelector('.human-options').style.display = 'none';
+  }
+</script>
+
+<!-- ✅ Hero Section with Background Video + Overlay + News Ticker -->
+<section class="hero-section">
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="{{ url_for('static', filename='images/bg1.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay text -->
+  <div class="hero-overlay">
+    <h1 class="display-4 fw-bold">Welcome to Student Tech</h1>
+    <p class="lead">Your One-Stop Solution for Student Projects & Assignments</p>
+  <a href="#hire-engineers" class="btn btn-primary btn-lg mt-3">Explore More</a>
+</div>
+
+  <!-- News Ticker -->
+  <div class="news-ticker">
+    <div class="ticker-content">
+      {% for h in headlines %}
+        <a href="{{ h.link }}" target="_blank">{{ h.title }}</a>
+        {% if not loop.last %}<span class="separator">|</span>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ✅ CSS for Hero + Ticker -->
+<style>
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hero-section {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.hero-overlay {
+  position: relative;
+  color: white;
+  z-index: 1;
+}
+
+/* ✅ News Ticker */
+.news-ticker {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 2px solid #FFD700;
+  border-bottom: 2px solid #FFD700;
+  padding: 8px 0;
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  z-index: 2;
+}
+
+.ticker-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker-scroll 30s linear infinite;
+  font-size: 1rem;
+}
+
+.ticker-content a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0 15px;
+  transition: color 0.3s;
+}
+
+.ticker-content a:hover {
+  color: #FFD700;
+}
+
+.separator {
+  color: #FFD700;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+<!-- Hire Engineers Section -->
+<section id="hire-engineers" class="hire-engineers py-5 bg-light"><div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <h2 class="fw-bold mb-3">Hire Engineers Online for Your Projects</h2>
+        <p class="fs-5 text-muted">
+          At <strong>Student Tech</strong>, we connect innovative engineers with organizations and students who want their projects brought to life. Our engineers specialize in turning ideas into reliable, efficient, and practical solutions using the latest technologies, scientific methods, and analytical skills.
+        </p>
+        <p class="fs-5 text-muted">
+          Hiring an engineer through our platform ensures your project is completed quickly and professionally. Whether you need software development, electrical circuits, mechanical designs, or structural solutions, we have experts ready to deliver results that exceed expectations.
+        </p>
+        <p class="fs-5 text-muted">
+          Our engineers come from a variety of specialties, including:
+        </p>
+        <ul class="list-unstyled fs-5 text-muted">
+          <li>💻 Software Engineering</li>
+          <li>⚡ Electrical & Electronics Engineering</li>
+          <li>🔧 Mechanical & Automotive Engineering</li>
+          <li>🏗 Structural & Civil Engineering</li>
+          <li>🎵 Audio & Multimedia Engineering</li>
+          <li>🖌 Design & Drafting (AutoCAD, 2D/3D, Architecture)</li>
+        </ul>
+      <a href="mailto:studenttech404@gmail.com?subject=Hire%20Engineer&body=Hello%20StudentTech%2C%0A%0AI%20am%20interested%20in%20hiring%20an%20engineer%20for%20my%20project.%0A%0ARegards%2C"
+   class="btn btn-primary mt-3">
+   Find Your Engineer
+</a>
+</div>
+      <div class="col-md-6 text-center">
+      <img src="/static/images/home.jpg" alt="Hire Engineers" class="img-fluid" style="max-height:400px;">
+</div>
+    </div>
+  </div>
+</section>
+{% include 'footer.html' %}

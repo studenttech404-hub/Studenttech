@@ -1,0 +1,109 @@
+*{
+    font-family: "inter" , sans-serif;
+}
+.container1 h1 ,p{
+    color: aliceblue;
+}
+.container1{
+   padding-top: 70px;
+   padding-bottom: 70px;
+}
+.container1 p{
+    font-size: 17px;
+}
+#c1{
+     /* background-color: rgb(65, 65, 243); */
+   background: linear-gradient(to right, #9C27B0, #3F51B5);
+
+}
+#text p{
+    color: black;
+    font-size: 17px;
+}
+#c2{
+    margin-top: 34px;
+}
+#facts h3{
+    color:  rgb(65, 65, 243);
+}
+#facts{
+    text-align: center;
+}
+#i1{
+   /* height: 400px;
+   width: 700px; */
+    border-radius: 9px;
+}
+#c3{
+    /* background-color:rgb(243, 249, 255); */
+     background: linear-gradient(to right, #f4e6f7, #eceefa);
+
+}
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#circle1{
+    background-color: rgb(169, 218, 247);
+}
+#circle2{
+    background-color: rgb(187, 245, 187);
+}
+#circle3{
+    background-color: rgb(249, 183, 249);
+}
+.corevalues i{
+    font-size: 20px;
+}
+/* .corevalues{
+    background-color: aqua;
+} */
+#medal{
+    color: blue;
+
+}
+#award{
+    color: darkgreen;
+
+}
+#headset{
+    color: blueviolet;
+}
+.blue{
+    color:  rgb(65, 65, 243);
+}
+#lastcircle1{
+    background-color: rgb(161, 94, 243);
+    display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+#lastcircle2{
+    background-color: rgb(161, 94, 243);
+
+}
+#lastcircle3{
+    background-color: rgb(161, 94, 243);
+
+}
+#lastcircle4{
+    background-color: rgb(161, 94, 243);
+
+}
+
+@media only screen and (min-width:768px) and (max-width:991px){
+    #expert{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #expertparent{
+        gap: 30px;
+    }
+
+}

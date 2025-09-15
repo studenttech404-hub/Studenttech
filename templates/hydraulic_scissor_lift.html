@@ -1,0 +1,38 @@
+<body style="background: linear-gradient(to right, #9C27B0, #3F51B5);">
+{% include 'header.html' %}
+
+<main class="container my-5" style="padding-top: 120px;">
+  <article class="p-4 shadow-lg rounded bg-white">
+    <h2 class="fw-bold mb-3">🔧 Hydraulic Scissor Lift</h2>
+    <p>This project uses hydraulic principles to build a functional scissor lift platform, ideal for demonstrating Pascal’s Law in action.</p>
+
+    <h3 class="mt-4">✅ Key Features</h3>
+    <ul>
+      <li>Based on Pascal's Law</li>
+      <li>Lifts light to moderate loads</li>
+      <li>Constructed using syringes or mini pistons</li>
+      <li>No electrical power required</li>
+      <li>Compact and portable design</li>
+    </ul>
+
+    <div class="text-center my-3">
+      <img src="{{ url_for('static', filename='images/hydraulic_lift.jpg') }}"
+           alt="Hydraulic Scissor Lift Diagram"
+           class="img-fluid rounded shadow"
+           style="width:200px; height:auto;">
+      <p class="text-muted small">Hydraulic Scissor Lift - Conceptual Illustration</p>
+    </div>
+
+    <h3 class="mt-4">⚙️ Working Mechanism</h3>
+    <p>When pressure is applied to the fluid inside the connected syringes, the force is transmitted equally in all directions. This force causes the lift arms to rise, lifting the platform smoothly.</p>
+
+    <h3 class="mt-4">📁 Project Files</h3>
+    <ul>
+      <li><code>Diagrams/hydraulic_lift_schematic.png</code></li>
+      <li><code>Docs/lift_build_notes.pdf</code></li>
+    </ul>
+  </article>
+</main>
+
+{% include 'footer.html' %}
+</body>

@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required Meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <meta name="title" content="DC Motor Speed Control with Arduino & L293N | Industrial Automation Project">
+  <meta name="description" content="Microcontroller-based DC motor control using Arduino Uno and L293N driver. Includes two patterns: smooth ramp up/down and step-wise speed doubling. Full circuit, code, and simulations.">
+  <meta name="keywords" content="Arduino, L293N, DC motor, PWM, industrial automation, Proteus simulation, motor speed control, embedded systems">
+  <meta name="author" content="Muhammad Amir Rehman">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DC Motor Speed Control with Arduino & L293N" />
+  <meta property="og:description" content="Industrial-grade DC motor control: patterns, circuit, code, and simulations." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="{{ url_for('static', filename='images/pattern1.png') }}" />
+  <meta property="og:url" content="https://github.com/yourusername/dc-motor-control" />
+
+  <title>⚙️ DC Motor Speed Control (Arduino + L293N)</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Page Styles (small, uniform images) -->
+  <style>
+    .hero-badge { letter-spacing: .3px; }
+    .card-soft { border: 0; border-radius: 1rem; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+    .img-small { width: 300px; height: auto; border-radius: .75rem; box-shadow: 0 6px 18px rgba(0,0,0,.15); }
+    pre code { font-size: .9rem; }
+    .table th { white-space: nowrap; }
+    .section-title { font-weight: 800; }
+  </style>
+</head>
+
+<body  style="background: linear-gradient(to right, #9C27B0, #3F51B5);">
+{% include "header.html" %}
+<main class="container my-5" style="padding-top: 120px;">
+  <article class="p-4 p-md-5 bg-white rounded-4 card-soft">
+
+    <!-- Title / Hero -->
+    <div class="text-center mb-4">
+      <span class="badge bg-dark-subtle text-dark hero-badge">Industrial Automation • Embedded Systems</span>
+      <h1 class="fw-bold mt-3 text-primary">⚙️ DC Motor Speed Control (Arduino + L293N)</h1>
+      <p class="lead mb-0">
+        A microcontroller-based system to control a 12V DC motor using <strong>PWM</strong> with two
+        programmable speed patterns—ideal for <em>industrial</em> motion control and automation labs.
+      </p>
+    </div>
+    <hr class="my-4">
+
+    <!-- Gallery: Connections + Simulations (small images) -->
+    <div class="row g-4 justify-content-center text-center">
+      <div class="col-12">
+        <h5 class="text-secondary mb-2">Circuit & Simulations</h5>
+      </div>
+      <div class="col-auto">
+        <img src="{{ url_for('static', filename='images/connections.png') }}" alt="Connections Diagram"
+             class="img-small">
+        <div class="small text-muted mt-2">Connections (Arduino + L293N + Motor)</div>
+      </div>
+      <div class="col-auto">
+        <img src="{{ url_for('static', filename='images/pattern1.png') }}" alt="Simulation Pattern 1"
+             class="img-small">
+        <div class="small text-muted mt-2">Simulation — Pattern 1</div>
+      </div>
+      <div class="col-auto">
+        <img src="{{ url_for('static', filename='images/pattern2.png') }}" alt="Simulation Pattern 2"
+             class="img-small">
+        <div class="small text-muted mt-2">Simulation — Pattern 2</div>
+      </div>
+    </div>
+
+    <!-- Objectives -->
+    <section class="mt-5">
+      <h3 class="section-title">🎯 Objectives</h3>
+      <p class="mb-1">
+        Design and implement a microcontroller-based system that operates a DC motor with
+        <strong>varying</strong> and <strong>constant</strong> speeds based on defined timing patterns,
+        simulating industrial processes where precise speed control is critical.
+      </p>
+    </section>
+
+    <!-- Problem Description -->
+    <section class="mt-4">
+      <h3 class="section-title">🧩 Problem Description</h3>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="p-3 border rounded-3 h-100">
+            <h6 class="fw-bold mb-2">Pattern 1 — Smooth Ramp</h6>
+            <ul class="mb-0">
+              <li>Gradually increase speed to maximum within <strong>1.5 minutes</strong>.</li>
+              <li>Gradually decrease speed back to zero within the next <strong>1.5 minutes</strong>.</li>
+              <li>Turn <strong>OFF</strong> the motor.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 border rounded-3 h-100">
+            <h6 class="fw-bold mb-2">Pattern 2 — Step-wise Doubling</h6>
+            <ul class="mb-0">
+              <li>Slow speed for <strong>30s</strong> → double for <strong>30s</strong> → double again for <strong>30s</strong>.</li>
+              <li>Reduce speed in reverse order with the same delays.</li>
+              <li>Turn <strong>OFF</strong> the motor.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Description -->
+    <section class="mt-4">
+      <h3 class="section-title">🛠️ System Description</h3>
+      <ul>
+        <li><strong>Microcontroller:</strong> Arduino Uno (ATmega328P) — 8-bit MCU with 6 PWM channels.</li>
+        <li><strong>Motor Driver:</strong> L293N H-bridge — bidirectional control with PWM speed control.</li>
+        <li><strong>Motor:</strong> 12V brushed DC motor, continuous rotation, PWM capable.</li>
+        <li><strong>Power:</strong> 12V DC for motor, 5V regulated for Arduino.</li>
+        <li><strong>Software:</strong> Arduino IDE (development) and Proteus (simulation).</li>
+      </ul>
+
+      <div class="table-responsive mt-3">
+        <table class="table table-striped align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Arduino Pin</th>
+              <th>Motor Driver Pin</th>
+              <th>Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>D9 (ENA)</td><td>ENA</td><td>PWM signal for speed control</td></tr>
+            <tr><td>D13 (IN1)</td><td>IN1</td><td>Motor direction control</td></tr>
+            <tr><td>D12 (IN2)</td><td>IN2</td><td>Motor direction control</td></tr>
+            <tr><td>GND</td><td>GND</td><td>Common ground</td></tr>
+            <tr><td>5V</td><td>Vcc (logic)</td><td>Logic power (if required)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Source Code -->
+    <section class="mt-4">
+      <h3 class="section-title">💻 Arduino Source Code</h3>
+      <pre class="bg-dark text-white p-3 rounded-3"><code>// Arduino Code for DC Motor Control
+
+const int ENA = 9;    // PWM pin for speed control
+const int IN1 = 13;   // Direction control
+const int IN2 = 12;   // Direction control
+
+// Speed parameters (PWM values 0-255)
+const int speed1 = 50;   // Minimum speed to overcome friction
+const int speed2 = 255;  // Maximum speed
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+
+  // Initial direction (forward)
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("Pattern 1:");
+  Pattern1();
+
+  delay(5000); // Pause between patterns
+
+  Serial.println("Pattern 2:");
+  Pattern2();
+
+  delay(5000); // Pause before repeating
+}
+
+void printSpeed(int speed) {
+  analogWrite(ENA, speed);
+  Serial.print("Speed set to: ");
+  Serial.print(speed);
+  Serial.print(" (");
+  Serial.print(map(speed, 0, 255, 0, 100));
+  Serial.println("%)");
+}
+
+// Pattern 1: Constant acceleration and deceleration
+void Pattern1() {
+  const unsigned long rtime = 90000; // 1.5 minutes in ms
+  const int steps = 100;
+
+  // Ramp up
+  for (int i = 0; i <= steps; i++) {
+    int speed = map(i, 0, steps, speed1, speed2);
+    printSpeed(speed);
+    delay(rtime / steps);
+  }
+
+  // Ramp down
+  for (int i = steps; i >= 0; i--) {
+    int speed = map(i, 0, steps, speed1, speed2);
+    printSpeed(speed);
+    delay(rtime / steps);
+  }
+
+  // Turn off
+  printSpeed(0);
+  Serial.println("Motor OFF");
+}
+
+// Pattern 2: Double speed every 30s
+void Pattern2() {
+  const unsigned long sTime = 30000; // 30 seconds
+  int baseSpeed = 60; // ~25% of max
+  int speedLevels[] = { baseSpeed, baseSpeed*2, baseSpeed*4, baseSpeed*2, baseSpeed, 0 };
+
+  for (int i = 0; i < 6; i++) {
+    printSpeed(speedLevels[i]);
+    Serial.print("Step "); Serial.print(i + 1);
+    Serial.print(" - Speed: "); Serial.println(speedLevels[i]);
+    delay(sTime);
+  }
+
+  Serial.println("Motor OFF");
+}</code></pre>
+    </section>
+
+    <!-- Results -->
+    <section class="mt-4">
+      <h3 class="section-title">📈 Simulation Results</h3>
+      <ul>
+        <li><strong>Pattern 1:</strong> Smooth acceleration to peak over 90s and symmetric deceleration to zero.</li>
+        <li><strong>Pattern 2:</strong> Step-wise speed doubling every 30s, then mirrored down to OFF.</li>
+      </ul>
+    </section>
+
+    <!-- Importance / Use -->
+    <section class="mt-4">
+      <h3 class="section-title">🌍 Importance & Use Cases</h3>
+      <p class="mb-0">
+        This controller demonstrates techniques used in <strong>conveyors, pumps, fans, and process lines</strong>,
+        where precise speed profiles reduce mechanical stress, improve throughput, and enable repeatable automation cycles.
+      </p>
+    </section>
+
+    <!-- Links -->
+    <section class="mt-4">
+      <h3 class="section-title">🔗 Repository</h3>
+      <p>
+        <a class="btn btn-outline-primary btn-sm" target="_blank" href="https://github.com/amirrehman19/Electrical-Projects/blob/main/PWM%20Ardunio%20Uno.pdsprj">
+          View on GitHub
+        </a>
+      </p>
+    </section>
+
+    <p class="text-center text-muted mt-4 mb-0">
+      <strong>MIT Licensed</strong> — Feel free to use, modify, and improve. ⭐ the repo if this helped!
+    </p>
+  </article>
+</main>
+
+</body>
+</html>
+{% include "footer.html" %}

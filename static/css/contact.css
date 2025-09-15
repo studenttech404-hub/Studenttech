@@ -1,0 +1,66 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin: 0;
+  padding-top: 80px;  /* ✅ Reserve space for fixed navbar */
+}
+
+.navbar {
+  background: #3F51B5 !important; /* ✅ Solid navbar background */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* optional subtle shadow */
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #198754;
+  margin-right: 10px;
+}
+
+#circle1 { background-color: #ffe2e2; }
+#circle2 { background-color: #d1f7e0; }
+#circle3 { background-color: #e0f0ff; }
+#circle4 { background-color: #f0e8ff; }
+
+#circle1 i { color: #dc3545; }
+#circle2 i { color: #198754; }
+#circle3 i { color: #0d6efd; }
+#circle4 i { color: #6f42c1; }
+
+.icon {
+  font-size: 1.6rem;
+  padding: 7px;
+  padding-bottom: 13px;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+.icon-blue { background-color: #e0f0ff; color: #0d6efd; width: 40px; height: 40px; }
+.icon-green { background-color: #d1f7e0; color: #198754; width: 40px; height: 40px; }
+.icon-purple { background-color: #f0e8ff; color: #6f42c1; width: 40px; height: 40px; }
+.icon-red { background-color: #ffe2e2; color: #dc3545; width: 40px; height: 40px; }
+
+.faq-box h5 {
+  margin-bottom: 0.5rem;
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.hero {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  color: white;
+  text-align: center;
+  padding: 5rem 1rem 3rem;  /* ✅ More top space */
+  margin-top: 0;           /* ✅ Remove margin hack */
+}

@@ -1,0 +1,105 @@
+{
+  "services": [
+    {
+      "key": "electrical-engineering",
+      "name": "Electrical Engineering",
+      "image": "/static/images/electrical.jpg",
+      "tags": [
+        "Power Systems",
+        "Circuits",
+        "Control",
+        "Electronics"
+      ],
+      "offers": [
+        "Semester-wise tutoring",
+        "Lab reports & simulations (MATLAB/Simulink)",
+        "Past papers & quizzes",
+        "Final exam bootcamps"
+      ]
+    },
+    {
+      "key": "mechanical-engineering",
+      "name": "Mechanical Engineering",
+      "image": "/static/images/mechanical.jpg",
+      "tags": [
+        "Thermo",
+        "Fluid",
+        "Mechanics",
+        "Design"
+      ],
+      "offers": [
+        "Concept mastery sessions",
+        "Assignments & project guidance (ANSYS/SolidWorks)",
+        "Past papers & MCQs",
+        "Crash courses"
+      ]
+    },
+    {
+      "key": "artificial-intelligence",
+      "name": "Artificial Intelligence",
+      "image": "/static/images/ai.jpg",
+      "tags": [
+        "ML",
+        "DL",
+        "NLP",
+        "Vision"
+      ],
+      "offers": [
+        "Model building workshops",
+        "Python notebooks & datasets",
+        "Capstone guidance",
+        "Interview prep"
+      ]
+    },
+    {
+      "key": "data-science",
+      "name": "Data Science",
+      "image": "/static/images/datascience.jpg",
+      "tags": [
+        "Python",
+        "Pandas",
+        "EDA",
+        "Visualization"
+      ],
+      "offers": [
+        "Hands-on projects",
+        "Portfolio building",
+        "Case studies",
+        "Mock interviews"
+      ]
+    },
+    {
+      "key": "mathematics",
+      "name": "Mathematics",
+      "image": "/static/images/math.jpg",
+      "tags": [
+        "Calculus",
+        "Linear Algebra",
+        "Probability"
+      ],
+      "offers": [
+        "Concept coaching",
+        "Problem-solving drills",
+        "Exam strategies",
+        "One-on-one sessions"
+      ]
+    },
+    {
+      "key": "computer-science",
+      "name": "Computer Science",
+      "image": "/static/images/cs.jpg",
+      "tags": [
+        "DSA",
+        "Databases",
+        "OS",
+        "Networks"
+      ],
+      "offers": [
+        "Algorithm practice",
+        "System design",
+        "Project mentorship",
+        "Exam prep"
+      ]
+    }
+  ]
+}

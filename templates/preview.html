@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+  <h3>{{ exam|upper }} - {{ subject|capitalize }} (Preview)</h3>
+  <iframe src="{{ url_for('static', filename='pdfs/' + filename) }}#page=1&zoom=100" 
+          width="100%" height="600px"></iframe>
+  <iframe src="{{ url_for('static', filename='pdfs/' + filename) }}#page=2&zoom=100" 
+          width="100%" height="600px"></iframe>
+  <div class="alert alert-warning mt-3">
+    🔒 Subscribe to view the full notes.
+  </div>
+  <a href="{{ url_for('subscribe') }}" class="btn btn-success">Subscribe Now</a>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{
+  "categories": [
+    "University",
+    "International University",
+    "MCAT",
+    "ECAT",
+    "SAT",
+    "NAT/GAT",
+    "GRE",
+    "Cadet College Prep"
+  ],
+  "subjects": [
+    "Mathematics",
+    "English",
+    "Physics",
+    "Chemistry",
+    "Computer Science"
+  ],
+  "chapters": {
+    "Mathematics": [
+      "Functions & Graphs",
+      "Limits & Continuity",
+      "Derivatives"
+    ],
+    "English": [
+      "Grammar Basics",
+      "Comprehension",
+      "Vocabulary"
+    ],
+    "Physics": [
+      "Kinematics",
+      "Dynamics",
+      "Waves"
+    ],
+    "Chemistry": [
+      "Atomic Structure",
+      "Periodic Table",
+      "Bonding"
+    ],
+    "Computer Science": [
+      "Intro to CS",
+      "Data Structures",
+      "Algorithms"
+    ]
+  },
+  "pdfs": {
+    "Functions & Graphs": [
+      "Notes.pdf",
+      "Practice.pdf"
+    ],
+    "Limits & Continuity": [
+      "Notes.pdf"
+    ],
+    "Derivatives": [
+      "Notes.pdf",
+      "Solved MCQs.pdf"
+    ],
+    "Grammar Basics": [
+      "Notes.pdf"
+    ],
+    "Comprehension": [
+      "Practice.pdf"
+    ],
+    "Vocabulary": [
+      "Notes.pdf"
+    ],
+    "Kinematics": [
+      "Notes.pdf",
+      "Practice.pdf"
+    ],
+    "Dynamics": [
+      "Notes.pdf"
+    ],
+    "Waves": [
+      "Notes.pdf"
+    ],
+    "Atomic Structure": [
+      "Notes.pdf"
+    ],
+    "Periodic Table": [
+      "Notes.pdf"
+    ],
+    "Bonding": [
+      "Practice.pdf"
+    ],
+    "Intro to CS": [
+      "Notes.pdf"
+    ],
+    "Data Structures": [
+      "Notes.pdf"
+    ],
+    "Algorithms": [
+      "Notes.pdf"
+    ]
+  }
+}

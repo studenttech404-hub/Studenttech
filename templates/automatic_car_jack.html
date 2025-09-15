@@ -1,0 +1,38 @@
+<body style="background: linear-gradient(to right, #9C27B0, #3F51B5);">
+{% include 'header.html' %}
+
+<main class="container my-5" style="padding-top: 120px;">
+  <article class="p-4 shadow-lg rounded bg-white">
+    <h2 class="fw-bold mb-3">🔧 Automatic Car Jack (Motorized Screw Jack)</h2>
+    <p>A motor-powered car lifting mechanism that uses a screw jack principle for lifting vehicles without manual effort.</p>
+
+    <h3 class="mt-4">✅ Key Features</h3>
+    <ul>
+      <li>Motor-driven screw mechanism</li>
+      <li>Effortless lifting with button control</li>
+      <li>Sturdy design for small to medium cars</li>
+      <li>Portable and safe</li>
+      <li>Ideal for roadside use</li>
+    </ul>
+
+    <div class="text-center my-3">
+      <img src="{{ url_for('static', filename='images/car_jack.jpg') }}"
+           alt="Automatic Car Jack (Motorized Screw Jack) Diagram"
+           class="img-fluid rounded shadow"
+           style="width:200px; height:auto;">
+      <p class="text-muted small">Automatic Car Jack (Motorized Screw Jack) - Conceptual Illustration</p>
+    </div>
+
+    <h3 class="mt-4">⚙️ Working Mechanism</h3>
+    <p>A DC motor turns the screw jack, converting rotational motion into linear motion to lift the car. The design ensures self-locking to prevent slippage during lifting.</p>
+
+    <h3 class="mt-4">📁 Project Files</h3>
+    <ul>
+      <li><code>Design/car_jack_blueprint.pdf</code></li>
+      <li><code>Docs/jack_notes.txt</code></li>
+    </ul>
+  </article>
+</main>
+
+{% include 'footer.html' %}
+</body>

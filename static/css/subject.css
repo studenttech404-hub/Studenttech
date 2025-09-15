@@ -1,0 +1,115 @@
+/* Gradient background for cards */
+.subject-card {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Hover effect */
+.subject-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Consistent image container */
+.card-img-container {
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.card-img-container img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Gradient text for heading */
+.text-gradient {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card body spacing */
+.card-body {
+  padding: 20px;
+}
+.hero-gradient {
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(rgba(156, 39, 176, 0.7), rgba(63, 81, 181, 0.7));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.card-img-cover {
+  width: 100%;
+  height: 220px; /* adjust height */
+  overflow: hidden;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.card-img-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills entire container */
+}
+/* New Card Style Without Images */
+.text-only-card {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Hover effect (same as subject-card) */
+.text-only-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: Style headings/text for text-only cards */
+.text-only-card .card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.text-only-card .card-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* Ensure footer sticks to bottom */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body > *:not(footer) {
+  flex: 1 0 auto; /* let content grow */
+}
+
+footer, .footer {
+  margin-top: auto;
+}

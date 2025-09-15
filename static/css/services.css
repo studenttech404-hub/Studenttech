@@ -1,0 +1,30 @@
+/* static/css/services.css */
+
+/* Gradient background */
+.hero-gradient {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  color: white;
+  padding: 60px 0;
+}
+
+/* Buttons */
+.btn-light {
+  background-color: #fff;
+  color: #3F51B5;
+  font-weight: 500;
+}
+
+.btn-outline-light {
+  border: 2px solid #fff;
+  color: #fff;
+  font-weight: 500;
+}
+
+.btn-light:hover {
+  background-color: #f1f1f1;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff;
+  color: #3F51B5;
+}

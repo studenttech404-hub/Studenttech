@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+  <h2>Select Your Test</h2>
+  <div class="d-grid gap-3 mt-4">
+    <a href="{{ url_for('subjects', exam='net') }}" class="btn btn-lg" style="background: linear-gradient(to right, #9C27B0, #3F51B5); color: white;">NET</a>
+    <a href="{{ url_for('subjects', exam='ecat') }}" class="btn btn-lg btn-outline-dark">ECAT</a>
+    <a href="{{ url_for('subjects', exam='mdcat') }}" class="btn btn-lg btn-outline-dark">MDCAT</a>
+    <a href="{{ url_for('subjects', exam='sat') }}" class="btn btn-lg btn-outline-dark">SAT</a>
+  </div>
+</div>
+{% endblock %}

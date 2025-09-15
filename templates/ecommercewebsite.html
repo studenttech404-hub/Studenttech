@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <meta name="title" content="🛍️ ASOS-Inspired E-Commerce Website - Node.js, Express, MongoDB">
+  <meta name="description" content="A fully functional e-commerce web app inspired by ASOS, built with Node.js, Express, MongoDB, and EJS. Includes user authentication, cart, checkout, and admin dashboard.">
+  <meta name="keywords" content="ASOS E-Commerce Clone, E-Commerce Website, Node.js, Express, MongoDB, EJS, Online Store, Shopping Cart, Checkout System">
+  <meta name="author" content="emaaanbutt">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="🛍️ ASOS-Inspired E-Commerce Website">
+  <meta property="og:description" content="A complete e-commerce platform inspired by ASOS with authentication, cart management, checkout flow, and admin controls.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/emaaaanbutt/ASOSLandingPage/main/preview.png">
+
+  <title>🛍️ ASOS-Inspired E-Commerce Website</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body  style="background: linear-gradient(to right, #9C27B0, #3F51B5);">
+{% include "header.html" %}
+<main class="container my-5" style="padding-top: 120px;">
+  <article class="p-4 shadow-lg rounded bg-white">
+
+    <h1 class="fw-bold mb-3 text-center">🛍️ ASOS-Inspired E-Commerce Website</h1>
+    <p class="lead text-center">
+      A fully functional e-commerce web application inspired by ASOS, built using <strong>Node.js, Express, MongoDB, and EJS</strong>.  
+      Includes user authentication, shopping cart, checkout flow, and an admin dashboard.
+    </p>
+
+    <hr>
+
+    <h3 class="mt-4">🔧 Tech Stack</h3>
+    <ul>
+      <li><strong>Frontend:</strong> HTML, CSS, EJS (server-side rendering)</li>
+      <li><strong>Backend:</strong> Node.js, Express</li>
+      <li><strong>Database:</strong> MongoDB + Mongoose</li>
+    </ul>
+
+    <h3 class="mt-4">🚀 Features</h3>
+    <ul>
+      <li>👗 Landing page inspired by ASOS layout</li>
+      <li>🛒 Add to cart, update quantity, remove items</li>
+      <li>👥 User registration and login</li>
+      <li>📦 Checkout flow with order summary</li>
+      <li>🔐 Authentication & session management</li>
+      <li>🛠️ Admin dashboard to manage products and orders</li>
+    </ul>
+
+    <h3 class="mt-4">🛠️ Setup Instructions</h3>
+    <pre class="bg-dark text-white p-3 rounded"><code>git clone https://github.com/emaaanbutt/ASOSLandingPage.git
+cd ASOSLandingPage
+npm install
+
+# Create a .env file and add your keys:
+MONGODB_URI=your_mongodb_connection
+
+npm start
+# Open http://localhost:4000 in your browser
+</code></pre>
+
+    <h3 class="mt-4">📦 Repository</h3>
+    <p>
+      🔗 <a href="https://github.com/emaaanbutt/ASOSLandingPage" target="_blank">
+        View on GitHub
+      </a>
+    </p>
+
+    <p class="text-center mt-5">
+      <span class="fw-bold">MIT Licensed</span> — Free to use, share, and improve!
+      Don’t forget to ⭐ the repo if you like it 💖
+    </p>
+  </article>
+</main>
+
+</body>
+</html>
+
+{% include "footer.html" %}

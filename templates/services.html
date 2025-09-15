@@ -1,0 +1,119 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - StudentTech</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}" />
+</head>
+<body>
+
+  <!-- Header -->
+  {% include 'header.html' %}
+
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <!-- Left Side (Text + Buttons) -->
+       <div class="col-md-7">
+  <div class="col-md-7">
+  <h1 class="display-5 fw-bold">Our Services & Test Prep</h1>
+  <p class="mt-3">
+    At <strong>Student Tech</strong>, we help students create impressive projects across Engineering, Computer Science, Computer Vision, and Cybersecurity, while connecting them with top companies.
+
+    Prepare for MDCAT, ECAT, SAT, GRE, NET, and more with our upcoming entry test notes and materials — <strong>coming soon</strong>!
+  </p>
+</div>
+<div class="mt-4 d-flex gap-3 flex-column">
+
+    <!-- Coming Soon -->
+    <span class="coming-soon mt-2">Entry test Preparation Coming Soon</span>
+
+    <a href="{{ url_for('service') }}" class="btn btn-outline-light px-4 py-2">Explore Services</a>
+  </div>
+</div>
+
+<style>
+.coming-soon {
+  font-weight: bold;
+  color: white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+</style>
+
+        <!-- Right Side (Small Image) -->
+        <div class="col-md-5 text-center">
+          <img src="/static/images/s.jpg" class="img-fluid rounded-3 shadow-sm w-75" alt="StudentTech">
+        </div>
+      </div>
+    </div>
+  </section>
+<section class="services-section py-5 bg-light">
+  <div class="container">
+    <!-- Services Heading -->
+    <div class="text-center mb-5">
+      <h2 class="fw-bold display-5">Our Services</h2>
+      <p class="fs-5 text-muted mt-3">
+  At <strong>Student Tech</strong>, we provide a wide range of educational support and project assistance for students across all fields of study.
+  Whether you are pursuing
+  <a href="{{ url_for('mechanical') }}">Mechanical Engineering</a>,
+  <a href="{{ url_for('electrical') }}">Electrical & Electronics</a>,
+  <a href="{{ url_for('computerscience') }}">Computer Science</a>,
+  <a href="{{ url_for('computervision') }}">Computer Vision</a>, or
+  <a href="{{ url_for('cybersecurity') }}">Cybersecurity</a>, our goal is to help you build practical skills and complete impactful projects.
+  From detailed circuit designs to software solutions, from innovative project concepts to hands-on guidance, we make learning engaging, collaborative, and real-world oriented.
+  Our team of experts ensures that your work is industry-ready and presents your talent to top companies, helping you get noticed and hired.
+  Learn, build, and grow with Student Tech — we turn student ideas into reality!
+</p>
+
+    </div>
+
+    <!-- Entry Test Preparation -->
+    <div class="text-center mt-5">
+      <h2 class="fw-bold display-5">Entry Test Preparation</h2>
+      <p class="fs-5 text-muted mt-3">
+        Coming soon: Complete preparation notes for all major entry tests including ECAT, MDCAT, SAT, GRE, NET, and more.
+        We will provide detailed chapters, practice questions, and step-by-step guidance to help students master their subjects and ace their exams.
+        Whether you’re studying Mathematics, Physics, Chemistry, Biology, or English, everything you need for top performance will be available soon.
+        Stay tuned and get ready to learn, practice, and succeed — <strong>Entry Test Prep is on its way!</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Flash Toast -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+      {% for category, message in messages %}
+        <div class="toast align-items-center text-white bg-{{ 'success' if category=='success' else 'danger' }} border-0 show"
+             role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

@@ -1,0 +1,57 @@
+/* services.css */
+
+/* Gradient theme */
+.hero-gradient {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+}
+
+/* Tag buttons */
+.tag {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  background: #f3f4f6;
+  border-radius: 20px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background: #9C27B0;
+  color: #fff;
+}
+
+/* Service Cards */
+.service-card {
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.service-card img {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Buttons */
+.btn-theme {
+  background: linear-gradient(to right, #9C27B0, #3F51B5);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: opacity 0.3s ease;
+}
+
+.btn-theme:hover {
+  opacity: 0.9;
+  color: #fff;
+}
