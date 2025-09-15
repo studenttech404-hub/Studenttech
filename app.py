@@ -44,10 +44,6 @@ EMAIL_PASSWORD = "oata xwjd slng xmqq"
 
 db = SQLAlchemy(app)
 
-UPLOAD_FOLDER = "static/uploads/receipts"
-ALLOWED_EXTENSIONS = {"pdf"}
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 # --------------------
@@ -60,10 +56,11 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(200), nullable=False)
     is_subscribed = db.Column(db.Boolean, default=False)  # <--- NEW FIELD
 
+
 def is_valid_email(email):
-        if not email:
-            return False
-        return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
+    if not email:
+        return False
+    return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 
 class Testimonial(db.Model):
@@ -79,56 +76,12 @@ class Testimonial(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-class Receipt(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    file_path = db.Column(db.String(255), nullable=False)
-    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(50), default="pending")  # pending, approved, rejected
-
 
 # --------------------
 # Helpers
 # --------------------
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/upload_receipt', methods=['POST'])
-def upload_receipt():
-    if 'file' not in request.files:
-        flash("No file selected", "error")
-        return redirect(url_for('home'))
-
-    file = request.files['file']
-    if file.filename == '':
-        flash("Empty filename", "error")
-        return redirect(url_for('home'))
-
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(save_path)
-
-        # Save in DB
-        new_receipt = Receipt(
-            user_id=session.get('user_id', 0),  # replace later with actual login system
-            file_path=save_path
-        )
-        db.session.add(new_receipt)
-        db.session.commit()
-
-        flash("Receipt uploaded successfully!", "success")
-        return redirect(url_for('receipts'))
-    else:
-        flash("Only PDF files allowed!", "error")
-        return redirect(url_for('home'))
-
-
-@app.route('/receipts')
-def receipts():
-    all_receipts = Receipt.query.all()
-    return render_template("receipts.html", receipts=all_receipts)
 
 
 @app.route('/services')
@@ -204,7 +157,7 @@ def get_user_id():
 # Routes - pages & auth
 # --------------------
 @app.route('/')
-@app.route('/home   ')
+@app.route('/home')
 def home():
     try:
         headlines = get_techcrunch_headlines()
@@ -213,22 +166,23 @@ def home():
         headlines = []
     return render_template('home.html', headlines=headlines)
 
+
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
-        if request.method == "POST":
-            name = request.form["name"]
-            phone = request.form["phone"]
-            email = request.form["email"]
-            country = request.form["country"]
-            company = request.form["company"]
-            project = request.form["project"]
-            file = request.files["file"]
+    if request.method == "POST":
+        name = request.form["name"]
+        phone = request.form["phone"]
+        email = request.form["email"]
+        country = request.form["country"]
+        company = request.form["company"]
+        project = request.form["project"]
+        file = request.files["file"]
 
-            # -------------------
-            # 1. Email to YOU
-            # -------------------
-            subject = "New Project Submission"
-            body = f"""
+        # -------------------
+        # 1. Email to YOU
+        # -------------------
+        subject = "New Project Submission"
+        body = f"""
             New project submitted:
 
             Name: {name}
@@ -239,40 +193,40 @@ def submit():
             Project Details: {project}
             """
 
-            msg = MIMEMultipart()
-            msg["From"] = EMAIL_ADDRESS
-            msg["To"] = EMAIL_ADDRESS
-            msg["Subject"] = subject
-            msg.attach(MIMEText(body, "plain"))
+        msg = MIMEMultipart()
+        msg["From"] = EMAIL_ADDRESS
+        msg["To"] = EMAIL_ADDRESS
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain"))
 
-            # Attach file if uploaded
-            if file and file.filename != "":
-                filename = secure_filename(file.filename)
-                filepath = os.path.join("uploads", filename)
-                file.save(filepath)
+        # Attach file if uploaded
+        if file and file.filename != "":
+            filename = secure_filename(file.filename)
+            filepath = os.path.join("uploads", filename)
+            file.save(filepath)
 
-                with open(filepath, "rb") as f:
-                    part = MIMEBase("application", "octet-stream")
-                    part.set_payload(f.read())
-                encoders.encode_base64(part)
-                part.add_header("Content-Disposition", f"attachment; filename={filename}")
-                msg.attach(part)
+            with open(filepath, "rb") as f:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(f.read())
+            encoders.encode_base64(part)
+            part.add_header("Content-Disposition", f"attachment; filename={filename}")
+            msg.attach(part)
 
-            # Send email to YOU
-            try:
-                with smtplib.SMTP("smtp.gmail.com", 587) as server:
-                    server.starttls()
-                    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                    server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())
-            except Exception as e:
-                flash(f"Error sending your project details: {str(e)}", "danger")
+        # Send email to YOU
+        try:
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                server.starttls()
+                server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())
+        except Exception as e:
+            flash(f"Error sending your project details: {str(e)}", "danger")
 
-            # -------------------
-            # 2. Acknowledgment Email to USER
-            # -------------------
-            try:
-                ack_subject = "Thank You for Trusting StudentTech"
-                ack_body = f"""
+        # -------------------
+        # 2. Acknowledgment Email to USER
+        # -------------------
+        try:
+            ack_subject = "Thank You for Trusting StudentTech"
+            ack_body = f"""
                 Dear {name},
 
                 Thank you for trusting StudentTech with your project submission. 
@@ -289,175 +243,180 @@ def submit():
                 StudentTech Team
                 """
 
-                ack_msg = MIMEText(ack_body, "plain")
-                ack_msg["From"] = EMAIL_ADDRESS
-                ack_msg["To"] = email
-                ack_msg["Subject"] = ack_subject
+            ack_msg = MIMEText(ack_body, "plain")
+            ack_msg["From"] = EMAIL_ADDRESS
+            ack_msg["To"] = email
+            ack_msg["Subject"] = ack_subject
 
-                with smtplib.SMTP("smtp.gmail.com", 587) as server:
-                    server.starttls()
-                    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                    server.sendmail(EMAIL_ADDRESS, email, ack_msg.as_string())
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                server.starttls()
+                server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                server.sendmail(EMAIL_ADDRESS, email, ack_msg.as_string())
 
-            except Exception:
-                # Fail silently if email is invalid or undeliverable
-                pass
+        except Exception:
+            # Fail silently if email is invalid or undeliverable
+            pass
 
-            # Flash + Redirect
-            flash("✅ We have received your details and will contact you soon!", "success")
-            return redirect(url_for("services"))
+        # Flash + Redirect
+        flash("✅ We have received your details and will contact you soon!", "success")
+        return redirect(url_for("services"))
 
-        return render_template("submit.html")
+    return render_template("submit.html")
+
 
 @app.route('/aboutus')
 def aboutus():
-        return render_template('aboutus.html')
+    return render_template('aboutus.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-        if request.method == 'POST':
-            email = request.form.get('email')
-            password = request.form.get('password')
-            otp = generate_otp()
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        otp = generate_otp()
 
-            if send_otp_email(email, otp):
-                session['email'] = email
-                session['password'] = password
-                session['otp'] = otp
-                return redirect(url_for('verify'))
-            else:
-                flash("Failed to send OTP. Please check your email settings.", "danger")
-        return render_template('signup.html')
+        if send_otp_email(email, otp):
+            session['email'] = email
+            session['password'] = password
+            session['otp'] = otp
+            return redirect(url_for('verify'))
+        else:
+            flash("Failed to send OTP. Please check your email settings.", "danger")
+    return render_template('signup.html')
+
 
 @app.route('/verify', methods=['GET', 'POST'])
 def verify():
-        if request.method == 'POST':
-            user_otp = request.form.get('otp')
+    return render_template('verify.html')
+#     if request.method == 'POST':
+#         user_otp = request.form.get('otp')
+#
+#         # Ensure both are strings
+#         if user_otp and str(user_otp).strip() == str(session.get('otp')).strip():
+#             email = session.get('email')
+#             password = session.get('password')
+#
+#             if User.query.filter_by(email=email).first():
+#                 flash("This email is already registered. Please log in.", "warning")
+#                 return redirect(url_for('login'))
+#
+#             hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+#             try:
+#                 new_user = User(
+#                      email=email,
+#                     password_hash=hashed_pw.decode('utf-8'),
+#                     is_subscribed=False
+#                 )
+#                 db.session.add(new_user)
+#                 db.session.commit()
+#                 # ✅ Auto login after signup
+#                 login_user(new_user)
+#                 flash("Signup successful. You are now logged in.", "success")
+#                 return redirect(url_for('home'))
+#
+#             except Exception as e:
+#                 db.session.rollback()
+#                 flash(f"Error: {str(e)}", "danger")
+#         else:
+#             flash("Invalid OTP. Try again.", "danger")
+#
+#     return render_template('verify.html')
 
-            # Ensure both are strings
-            if user_otp and str(user_otp).strip() == str(session.get('otp')).strip():
-                email = session.get('email')
-                password = session.get('password')
-
-                if User.query.filter_by(email=email).first():
-                    flash("This email is already registered. Please log in.", "warning")
-                    return redirect(url_for('login'))
-
-                hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-                try:
-                    new_user = User(
-                        email=email,
-                        password_hash=hashed_pw.decode('utf-8'),
-                        is_subscribed=False
-                    )
-                    db.session.add(new_user)
-                    db.session.commit()
-                    # ✅ Auto login after signup
-                    login_user(new_user)
-                    flash("Signup successful. You are now logged in.", "success")
-                    return redirect(url_for('home'))
-
-                except Exception as e:
-                    db.session.rollback()
-                    flash(f"Error: {str(e)}", "danger")
-            else:
-                flash("Invalid OTP. Try again.", "danger")
-
-        return render_template('verify.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-        if request.method == 'POST':
-            email = request.form.get('email')
-            password = request.form.get('password')
-            remember = request.form.get('remember')
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        remember = request.form.get('remember')
 
-            user = User.query.filter_by(email=email).first()
-            if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
-                login_user(user, remember=bool(remember))  # ✅ Proper Flask-Login login
-                flash("Login successful!", "success")
-                return redirect(url_for('home'))  # or wherever you want
-            else:
-                flash("Invalid email or password.", "danger")
-        return render_template('login.html')
+        user = User.query.filter_by(email=email).first()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
+            login_user(user, remember=bool(remember))  # ✅ Proper Flask-Login login
+            flash("Login successful!", "success")
+            return redirect(url_for('home'))  # or wherever you want
+        else:
+            flash("Invalid email or password.", "danger")
+    return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
-        logout_user()
-        flash("Logged out successfully.", "info")
-        return redirect(url_for('login'))
+    return render_template('home.html')
 
-    # --------------------
-    # Testimonials routes
-    # --------------------
+
 @app.route('/testimonials', methods=['GET'])
 def testimonials():
-        items = Testimonial.query.order_by(Testimonial.created_at.desc()).all()
-        return render_template('testimonials.html', testimonials=items)
+    items = Testimonial.query.order_by(Testimonial.created_at.desc()).all()
+    return render_template('testimonials.html', testimonials=items)
+
 
 @app.route('/submit_testimonial', methods=['POST'])
 def submit_testimonial():
-        full_name = request.form.get('full_name') or "Anonymous"
-        email = request.form.get('email') or "no-reply@example.com"
-        company = request.form.get('company', '')
-        position = request.form.get('position', '')
-        project = request.form.get('project') or request.form.get('project_name', '')
-        project_link = request.form.get('project_link', '')
+    full_name = request.form.get('full_name') or "Anonymous"
+    email = request.form.get('email') or "no-reply@example.com"
+    company = request.form.get('company', '')
+    position = request.form.get('position', '')
+    project = request.form.get('project') or request.form.get('project_name', '')
+    project_link = request.form.get('project_link', '')
 
-        try:
-            rating = int(request.form.get('rating', 5))
-            if rating < 1 or rating > 5:
-                rating = 5
-        except ValueError:
+    try:
+        rating = int(request.form.get('rating', 5))
+        if rating < 1 or rating > 5:
             rating = 5
+    except ValueError:
+        rating = 5
 
-        testimonial_text = request.form.get('testimonial', '').strip()
-        if not testimonial_text:
-            flash("Testimonial cannot be empty.", "warning")
-            return redirect(url_for('testimonials'))
-
-        t = Testimonial(
-            full_name=full_name,
-            email=email,
-            company=company,
-            position=position,
-            project=project,
-            project_link=project_link,
-            rating=rating,
-            testimonial=testimonial_text
-        )
-
-        try:
-            db.session.add(t)
-            db.session.commit()
-            flash("Thank you! Your testimonial has been submitted.", "success")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error saving testimonial: {str(e)}", "danger")
-
+    testimonial_text = request.form.get('testimonial', '').strip()
+    if not testimonial_text:
+        flash("Testimonial cannot be empty.", "warning")
         return redirect(url_for('testimonials'))
+
+    t = Testimonial(
+        full_name=full_name,
+        email=email,
+        company=company,
+        position=position,
+        project=project,
+        project_link=project_link,
+        rating=rating,
+        testimonial=testimonial_text
+    )
+
+    try:
+        db.session.add(t)
+        db.session.commit()
+        flash("Thank you! Your testimonial has been submitted.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error saving testimonial: {str(e)}", "danger")
+
+    return redirect(url_for('testimonials'))
+
 
 @app.route('/testimonials')
 def testimonials_list():
-        all_testimonials = Testimonial.query.order_by(Testimonial.id.desc()).all()
-        return render_template('testimonials.html', testimonials=all_testimonials)
+    all_testimonials = Testimonial.query.order_by(Testimonial.id.desc()).all()
+    return render_template('testimonials.html', testimonials=all_testimonials)
 
-    # --------------------
-    # Contact route
-    # --------------------
+
+# --------------------
+# Contact route
+# --------------------
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-        if request.method == "POST":
-            name = request.form.get("name")
-            email = request.form.get("email")
-            phone = request.form.get("phone")
-            priority = request.form.get("priority")
-            subject = request.form.get("subject")
-            message = request.form.get("message")
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        priority = request.form.get("priority")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
 
-            # 📩 Email to YOU (admin)
-            admin_msg = f"""
+        # 📩 Email to YOU (admin)
+        admin_msg = f"""
             📬 New Contact Form Submission:
 
             Name: {name}
@@ -469,15 +428,15 @@ def contact():
             {message}
             """
 
-            msg_to_admin = MIMEText(admin_msg, "plain")
-            msg_to_admin["Subject"] = f"New Contact Form: {subject}"
-            msg_to_admin["From"] = config.EMAIL_ADDRESS
-            msg_to_admin["To"] = config.EMAIL_ADDRESS
+        msg_to_admin = MIMEText(admin_msg, "plain")
+        msg_to_admin["Subject"] = f"New Contact Form: {subject}"
+        msg_to_admin["From"] = config.EMAIL_ADDRESS
+        msg_to_admin["To"] = config.EMAIL_ADDRESS
 
-            # 📩 Auto-reply to USER (only if valid email)
-            msg_to_user = None
-            if is_valid_email(email):
-                reply_msg = f"""
+        # 📩 Auto-reply to USER (only if valid email)
+        msg_to_user = None
+        if is_valid_email(email):
+            reply_msg = f"""
                 Hi {name},
 
                 Thank you for contacting us! We have received your message and will respond shortly.
@@ -492,127 +451,153 @@ def contact():
                 StudentTech Team
                 """
 
-                msg_to_user = MIMEText(reply_msg, "plain")
-                msg_to_user["Subject"] = "We received your message!"
-                msg_to_user["From"] = config.EMAIL_ADDRESS
-                msg_to_user["To"] = email
+            msg_to_user = MIMEText(reply_msg, "plain")
+            msg_to_user["Subject"] = "We received your message!"
+            msg_to_user["From"] = config.EMAIL_ADDRESS
+            msg_to_user["To"] = email
 
-            try:
-                with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                    server.login(config.EMAIL_ADDRESS, config.EMAIL_PASSWORD)
-                    server.send_message(msg_to_admin)
-                    if msg_to_user:
-                        server.send_message(msg_to_user)
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(config.EMAIL_ADDRESS, config.EMAIL_PASSWORD)
+                server.send_message(msg_to_admin)
+                if msg_to_user:
+                    server.send_message(msg_to_user)
 
-                flash("✅ Message sent successfully!", "success")
-            except Exception as e:
-                flash(f"❌ Failed to send message: {str(e)}", "danger")
+            flash("✅ Message sent successfully!", "success")
+        except Exception as e:
+            flash(f"❌ Failed to send message: {str(e)}", "danger")
 
-            return redirect(url_for("contact"))
+        return redirect(url_for("contact"))
 
-        return render_template("contact.html")
+    return render_template("contact.html")
 
-    # --------------------
-    # Other pages
-    # --------------------
+
+# --------------------
+# Other pages
+# --------------------
 @app.route("/electrical")
 def electrical():
-        return render_template("electrical.html")
+    return render_template("electrical.html")
+
 
 @app.route("/traffic")
 def traffic():
-        return render_template("traffic.html")
+    return render_template("traffic.html")
+
 
 @app.route("/scooty_charger")
 def scooty_charger():
-        return render_template("scooty_charger.html")
+    return render_template("scooty_charger.html")
+
 
 @app.route("/dc_motor_control")
 def dc_motor_control():
-        return render_template("dc_motor_control.html")
+    return render_template("dc_motor_control.html")
+
+
 @app.route("/mechanical")
 def mechanical():
-        return render_template("mechanical.html")
+    return render_template("mechanical.html")
+
 
 @app.route("/cybersecurity")
 def cybersecurity():
-        return render_template("cybersecurity.html")
+    return render_template("cybersecurity.html")
+
 
 @app.route("/computerscience")
 def computerscience():
-        return render_template("computerscience.html")
+    return render_template("computerscience.html")
+
 
 @app.route("/virtualpet")
 def virtualpet():
-        return render_template("virtualpet.html")
+    return render_template("virtualpet.html")
+
 
 @app.route("/digitalmemoryjar")
 def digitalmemoryjar():
-        return render_template("digitalmemoryjar.html")
+    return render_template("digitalmemoryjar.html")
+
 
 @app.route("/ecommercewebsite")
 def ecommercewebsite():
-        return render_template("ecommercewebsite.html")
+    return render_template("ecommercewebsite.html")
+
 
 @app.route("/todolistapp")
 def todolistapp():
-        return render_template("todolistapp.html")
+    return render_template("todolistapp.html")
+
 
 @app.route("/fingergesture")
 def fingergesture():
-        return render_template("fingergesture.html")
+    return render_template("fingergesture.html")
+
 
 @app.route("/gameboy")
 def gameboy():
-        return render_template("gameboy.html")
+    return render_template("gameboy.html")
+
 
 @app.route("/plantsvszombies")
 def plantsvszombies():
-        return render_template("plantsvszombies.html")
+    return render_template("plantsvszombies.html")
+
 
 @app.route("/xonixgame")
 def xonixgame():
-        return render_template("xonixgame.html")
+    return render_template("xonixgame.html")
+
 
 @app.route("/zumagame")
 def zumagame():
-        return render_template("zumagame.html")
+    return render_template("zumagame.html")
+
 
 @app.route("/gear_box")
 def gear_box():
-        return render_template("gear_box.html")
+    return render_template("gear_box.html")
+
 
 @app.route("/automatic_car_jack")
 def automatic_car_jack():
-        return render_template("automatic_car_jack.html")
+    return render_template("automatic_car_jack.html")
+
 
 @app.route("/hydraulic_scissor_lift")
 def hydraulic_scissor_lift():
-        return render_template("hydraulic_scissor_lift.html")
+    return render_template("hydraulic_scissor_lift.html")
+
 
 @app.route("/pedal_powered_water_pump")
 def pedal_powered_water_pump():
-        return render_template("pedal_powered_water_pump.html")
+    return render_template("pedal_powered_water_pump.html")
+
 
 @app.route("/wind_powered_charger")
 def wind_powered_charger():
-        return render_template("wind_powered_charger.html")
+    return render_template("wind_powered_charger.html")
+
 
 @app.route("/computervision")
 def computervision():
-        return render_template("computervision.html")
+    return render_template("computervision.html")
+
 
 @app.route("/facedetector")
 def facedetector():
-        return render_template("facedetector.html")
+    return render_template("facedetector.html")
+
 
 @app.route("/ppe")
 def ppe():
-        return render_template("ppe.html")
+    return render_template("ppe.html")
+
 
 @app.route("/bolts")
 def bolts():
-        return render_template("bolts.html")
+    return render_template("bolts.html")
 
 
 @app.route("/apply", methods=["GET", "POST"])
@@ -704,8 +689,10 @@ def apply():
     # --------------------
     # Startup
     # --------------------
+
+
 if __name__ == '__main__':
-        with app.app_context():
-            db.create_all()
-        app.run(debug=True, port=5001)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=5001)
 
