@@ -25,38 +25,42 @@ import config
 from otp_handler import generate_otp, send_otp_email
 
 app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"  # redirect here if not logged in
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
+EMAIL_ADDRESS = "studenttech404@gmail.com"
+EMAIL_PASSWORD = "oata xwjd slng xmqq"
 
 app.secret_key = "supersecretkey"
 # single combined DB file
 # Example format from Supabase
 
-EMAIL_ADDRESS = "studenttech404@gmail.com"
-EMAIL_PASSWORD = "oata xwjd slng xmqq"
+# PostgreSQL connection (Supabase Session Pooler)
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    "postgresql+psycopg2://postgres.xfadzetvawzaevhuserg:F16cs192@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres"
+)
+
+# Required for Supabase (force SSL)
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "connect_args": {"sslmode": "require"}
+}
 
 db = SQLAlchemy(app)
+
 
 
 
 # --------------------
 # Models (User + Testimonial)
 # --------------------
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(200), nullable=False)
-    is_subscribed = db.Column(db.Boolean, default=False)  # <--- NEW FIELD
-
-
+# class User(db.Model, UserMixin):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(150), unique=True, nullable=False)
+#     email = db.Column(db.String(150), unique=True, nullable=False)
+#     password_hash = db.Column(db.String(200), nullable=False)
+#     is_subscribed = db.Column(db.Boolean, default=False)  # <--- NEW FIELD
+#
+#
 def is_valid_email(email):
     if not email:
         return False
@@ -88,43 +92,43 @@ class Testimonial(db.Model):
 def services():
     return render_template("services.html")
 
-
-@app.route('/entrytest')
-def entrytest():
-    return render_template("entrytest.html")
-
-
-@app.route("/entrytest/<exam>")
-@login_required
-def subjects(exam):
-    return render_template("subjects.html", exam=exam)
-
-
-@app.route("/notes/<exam>/<subject>")
-@login_required
-def notes(exam, subject):
-    filename = f"{exam}_{subject}.pdf"
-    user = current_user
-
-    if user.is_subscribed:
-        return render_template("fullnotes.html", exam=exam, subject=subject, filename=filename)
-    else:
-        return render_template("preview.html", exam=exam, subject=subject, filename=filename)
-
-
-@app.route("/subscribe")
-@login_required
-def subscribe():
-    user = current_user
-
-    if not user.is_subscribed:
-        user.is_subscribed = True
-        db.session.commit()
-        msg = "✅ Subscription activated! You now have access to all notes."
-    else:
-        msg = "ℹ️ You are already subscribed."
-    return render_template("subscribe.html", message=msg)
-
+#
+# @app.route('/entrytest')
+# def entrytest():
+#     return render_template("entrytest.html")
+#
+#
+# @app.route("/entrytest/<exam>")
+# @login_required
+# def subjects(exam):
+#     return render_template("subjects.html", exam=exam)
+#
+#
+# @app.route("/notes/<exam>/<subject>")
+# @login_required
+# def notes(exam, subject):
+#     filename = f"{exam}_{subject}.pdf"
+#     user = current_user
+#
+#     if user.is_subscribed:
+#         return render_template("fullnotes.html", exam=exam, subject=subject, filename=filename)
+#     else:
+#         return render_template("preview.html", exam=exam, subject=subject, filename=filename)
+#
+#
+# @app.route("/subscribe")
+# @login_required
+# def subscribe():
+#     user = current_user
+#
+#     if not user.is_subscribed:
+#         user.is_subscribed = True
+#         db.session.commit()
+#         msg = "✅ Subscription activated! You now have access to all notes."
+#     else:
+#         msg = "ℹ️ You are already subscribed."
+#     return render_template("subscribe.html", message=msg)
+#
 
 @app.route('/service')
 def service():
@@ -144,13 +148,13 @@ def get_techcrunch_headlines():
 
     return headlines
 
-
-def get_user_id():
-    uid = session.get('user_id')
-    if not uid:
-        uid = str(uuid.uuid4())
-        session['user_id'] = uid
-    return uid
+#
+# def get_user_id():
+#     uid = session.get('user_id')
+#     if not uid:
+#         uid = str(uuid.uuid4())
+#         session['user_id'] = uid
+#     return uid
 
 
 # --------------------
@@ -269,26 +273,26 @@ def aboutus():
     return render_template('aboutus.html')
 
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        otp = generate_otp()
+# @app.route('/signup', methods=['GET', 'POST'])
+# def signup():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         password = request.form.get('password')
+#         otp = generate_otp()
+#
+#         if send_otp_email(email, otp):
+#             session['email'] = email
+#             session['password'] = password
+#             session['otp'] = otp
+#             return redirect(url_for('verify'))
+#         else:
+#             flash("Failed to send OTP. Please check your email settings.", "danger")
+#     return render_template('signup.html')
 
-        if send_otp_email(email, otp):
-            session['email'] = email
-            session['password'] = password
-            session['otp'] = otp
-            return redirect(url_for('verify'))
-        else:
-            flash("Failed to send OTP. Please check your email settings.", "danger")
-    return render_template('signup.html')
-
-
-@app.route('/verify', methods=['GET', 'POST'])
-def verify():
-    return render_template('verify.html')
+#
+# @app.route('/verify', methods=['GET', 'POST'])
+# def verify():
+#     return render_template('verify.html')
 #     if request.method == 'POST':
 #         user_otp = request.form.get('otp')
 #
@@ -322,29 +326,6 @@ def verify():
 #             flash("Invalid OTP. Try again.", "danger")
 #
 #     return render_template('verify.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        remember = request.form.get('remember')
-
-        user = User.query.filter_by(email=email).first()
-        if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
-            login_user(user, remember=bool(remember))  # ✅ Proper Flask-Login login
-            flash("Login successful!", "success")
-            return redirect(url_for('home'))  # or wherever you want
-        else:
-            flash("Invalid email or password.", "danger")
-    return render_template('login.html')
-
-
-@app.route('/logout')
-def logout():
-    return render_template('home.html')
-
 
 @app.route('/testimonials', methods=['GET'])
 def testimonials():
